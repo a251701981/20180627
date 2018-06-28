@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../static/css/mui.min.css" />
+	</head>
+	<body>
+		<div id="app" >
+			<app></app>
+		</div>
+	</body>
+	<script src="../../static/js/mod.js" ></script>
+	<script>
+		function _autoSize()
+		{
+			var width = (window.innerWidth > 480)?480:window.innerWidth;
+			var height = window.innerHeight;
+			var rem = width / 10;
+			var html = document.querySelector('html');
+			html.style.fontSize = rem + 'px';
+			html.style.position = 'relative';
+			html.style.width = width + 'px';
+			html.style.height = height + 'px';
+		}
+		_autoSize();
+		window.onResize = _autoSize();
+	</script>
+	<script src="./index.js" ></script>
+</html>
