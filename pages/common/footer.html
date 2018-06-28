@@ -1,0 +1,15 @@
+	<script src="../../static/js/mod.js" ></script>
+	<script>
+		function _autoSize()
+		{
+			var width = (window.innerWidth > 480)?480:window.innerWidth;
+			var height = window.innerHeight;
+			var rem = width / 10;
+			var html = document.querySelector('html');
+			html.style.fontSize = rem + 'px';
+			html.style.position = 'relative';
+			html.style.width = width + 'px';
+		}
+		_autoSize();
+		window.onResize = _autoSize();
+	</script>
