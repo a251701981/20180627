@@ -3,8 +3,8 @@ var mui = require('/modules/mui.js');
 mui.plusReady(function(){
 	plus.nativeUI.showWaiting('Loading...');
 	setTimeout(function(){
-		plus.webview.currentWebview().show();
 		plus.nativeUI.closeWaiting();
+		console.log(window.location.href);
 	},1000);
 
 });
