@@ -24,6 +24,15 @@ module.exports = {
 			}
 		);
 		return vars;
-	}
+	},
+	/**
+	 * 获取当前用户信息
+	 * @return Json Object
+	 * */
+	getUserInfo:function()
+	{
+		//todo
+		return {id:1,name:'管理员',ico:"/static/imgs/60X60.gif"};
+	},
 
 };

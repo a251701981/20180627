@@ -8,7 +8,7 @@
 			var html = document.querySelector('html');
 			html.style.fontSize = rem + 'px';
 			html.style.position = 'relative';
-			html.style.width = width + 'px';
+			window._rem = rem;
 		}
 		_autoSize();
 		window.onResize = _autoSize();

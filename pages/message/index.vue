@@ -26,6 +26,7 @@
 
 <script>
 	var mui = require('/modules/mui.js');
+	var $ = require('/modules/jquery.js');
 	var tools = require('/modules/tools.js');
 	var config = require('/modules/config.js');
 	module.exports = {
@@ -82,17 +83,29 @@
 				plus.webview.currentWebview().show();
 				plus.nativeUI.closeWaiting();
 			},
+			/**
+			 * 更新消息阅读状态
+			 *@param formId 发送者id
+			 *@parma type 消息类型
+			 * */
+			postReaded:function(fromId,type)
+			{
+				return $.Deferred(function(def){
+					//todo
+					def.resolve(1);
+				});
+			}
 		},
 		created: function() {
 			this.loadData();
 			var vm = this;
 			/*
 			 * 新消息事件 new_message
-			 * detail:{id,name,ico,newMessage,messageCount,time}
+			 * detail:{id：发送者id,name:发送者名字,ico:发送者头像,newMessage:消息内容,messageCount:消息条数,time:发送时间}
 			 * */
 			document.addEventListener('new_message', function(event) {
 				for(var i = 0; i < vm.items.length; i++) {
-					if(event.detail.id == vm.items[i].id) //更新
+					if(event.detail.id == vm.items[i].id  && event.detail.type==vm.items[i].type) //更新
 					{
 						event.detail.messageCount = vm.items[i].messageCount + 1;
 						vm.$set(vm.items, i, event.detail);
@@ -105,16 +118,37 @@
 
 			/**
 			 * 消息被阅读事件 readed_message
-			 * detail:{id}
+			 * detail:{id:发送者id,type:消息类型}
 			 * */
 			document.addEventListener('readed_message', function(event) {
 				for(var i = 0; i < vm.items.length; i++) {
-					if(event.detail.id == vm.items[i].id) //更新
+					if(event.detail.id == vm.items[i].id && event.detail.type==vm.items[i].type) //更新
+					{
+						if(vm.items[i].messageCount == 0) return;
+						vm.postReaded(event.detail.id,event.detail.type) //更新阅读状态到远程
+						.then(function(){
+							var message = mui.extend({}, vm.items[i]);
+						    message.messageCount = 0;
+						    vm.$set(vm.items, i, message);
+						});
+						return; //更新一条记录的维度消息数
+					}
+				}
+			});
+			
+			/**
+			 * 发送消息成功事件 sended_message
+			 * detail:{toId:接收者id,message:消息类型,type:消息类型,time:发送时间}
+			 * */
+			document.addEventListener('sended_message', function(event) {
+				for(var i = 0; i < vm.items.length; i++) {
+					if(event.detail.toId == vm.items[i].id && event.detail.type == vm.items[i].type) //更新
 					{
 						var message = mui.extend({}, vm.items[i]);
-						message.messageCount = 0;
+						message.newMessage = event.detail.message;
+						message.time = event.detail.time;
 						vm.$set(vm.items, i, message);
-						return; //更新一条记录的维度消息数
+						return; //更新一条记录的最后消息内容和时间
 					}
 				}
 			});
@@ -124,24 +158,17 @@
 </script>
 
 <style scoped>
-	.title {
-		margin: 20px 15px 10px;
-		color: #6d6d72;
-		font-size: 15px;
-	}
 	
-	.oa-contact-cell.mui-table .mui-table-cell {
-		padding: 11px 0;
+	.oa-contact-cell .mui-table .mui-table-cell {
 		vertical-align: middle;
 	}
 	
 	.oa-contact-cell {
 		position: relative;
-		margin: -11px 0;
 	}
 	
 	.oa-contact-avatar {
-		width: 75px;
+		width: 1.5rem;
 	}
 	
 	.oa-contact-avatar img {
@@ -150,11 +177,13 @@
 	
 	.oa-contact-content {
 		width: 100%;
+		padding-left:0.2rem;
+		padding-right:0.2rem;
+		padding-top:0;
+		padding-bottom: 0;
 	}
 	
-	.oa-contact-name {
-		margin-right: 20px;
-	}
+
 	
 	.oa-contact-name {
 		float: left;
@@ -172,11 +201,13 @@
 		color: white;
 		border-radius: 50%;
 		text-align: center;
+		line-height: 0.5rem;
+		font-size: 0.3rem;
 	}
 	
 	.oa-contact-email {
 		display: block;
-		width: 7rem;
+		width: 6.5rem;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;

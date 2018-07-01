@@ -1,13 +1,13 @@
 <template>
 	<div>
-		<header class="mui-bar mui-bar-nav" style="height:6%;position: fixed;" >
+		<header class="mui-bar mui-bar-nav" style="height:1.1rem;background: #007AFF;" >
 			<a class="mui-pull-left"></a>
 			<h1 class="mui-title">{{title}}</h1>
 		</header>
 		<div class="mui-content" >
 			
 		</div>
-	    <nav class="mui-bar mui-bar-tab" style="height:5%;" >
+	    <nav class="mui-bar mui-bar-tab" style="height:1rem;" >
 			<a class="mui-tab-item mui-active" @tap="clickItem(0)" >
 				<span class="mui-icon mui-icon-home"></span>
 				<span class="mui-tab-label">{{items[0].title}}</span>
@@ -60,7 +60,7 @@
 					return;
 				}
 			    plus.nativeUI.showWaiting('Loading...');
-				var wv = plus.webview.create(host + path , host + path,{top:'6%',bottom:'6%'});  //创建目标页
+				var wv = plus.webview.create(host + path , host + path,{top:(_rem*1.1)+'px',bottom:(_rem*1.4)+'px'});  //创建目标页
 				wv.hide();
 				plus.webview.currentWebview().append(wv);
 				this.pages[path] = wv;
@@ -81,6 +81,6 @@
 	};
 </script>
 
-<style>
+<style scoped >
 	
 </style>
