@@ -60,19 +60,34 @@ fis.match('**.js', {
   // fis-optimizer-uglify-js 插件进行压缩，已内置
   //optimizer: fis.plugin('uglify-js'),
    release:'.$0',
+   url:'www$0',
 });
 
 fis.match('**.css', {
   // fis-optimizer-clean-css 插件进行压缩，已内置
   //optimizer: fis.plugin('clean-css'),
-  release:'.$0'
+  release:'.$0',
+  url:'www$0',
 });
 
 fis.match('**.png', {
   // fis-optimizer-png-compressor 插件进行压缩，已内置
   //optimizer: fis.plugin('png-compressor'),
-  release:'.$0'
+  release:'.$0',
+  url:'www$0',
 });
+
+fis.match('**.ttf', {
+  release:'.$0',
+  url:'www$0',
+});
+
+
+fis.match('*', {
+  deploy: fis.plugin('local-deliver', {
+    to: 'C:/Users/Administrator/AppData/Local/.fis3-tmp/www/www'
+  })
+})
 
 
 
