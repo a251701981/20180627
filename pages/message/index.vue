@@ -28,7 +28,6 @@
 	var mui = require('/modules/mui.js');
 	var $ = require('/modules/jquery.js');
 	var tools = require('/modules/tools.js');
-	var config = require('/modules/config.js');
 	module.exports = {
 		data: function() {
 			return {
@@ -74,13 +73,14 @@
 		methods: {
 			
 			click: function(id,type,name) {
-				plus.nativeUI.showWaiting('Loading...');
-				var path = config.host + __uri('/pages/dialog/index.html') + '?id=' + id + '&type=' + type + '&name=' + name;
-				plus.webview.create(path,path);
+				plus.nativeUI.showWaiting();
+				tools.setRequest({id:id ,type:type,name:name});
+				var path = tools.getRealUrl(__uri('/pages/dialog/index.html'));
+				plus.webview.create(path,path).hide();
 			},
 			loadData: function() {
 				//todo
-				plus.webview.currentWebview().show();
+				tools.showWebview(plus.webview.currentWebview());
 				plus.nativeUI.closeWaiting();
 			},
 			/**

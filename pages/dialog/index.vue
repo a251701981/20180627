@@ -31,8 +31,7 @@
 <script>
 	var tools = require('/modules/tools.js');
 	var $ = require('/modules/jquery');
-	var host = require('/modules/config.js').host;
-	var request = tools.getUrlVars();
+	var request = tools.getRequest();
 	var userInfo = tools.getUserInfo();
 	module.exports = {
 		data: function() {
@@ -57,7 +56,7 @@
 		},
 		methods: {
 			loadData: function() {
-
+				
 			},
 			sendMessage: function() {
 				var self = this;
@@ -83,6 +82,7 @@
 							type: request.type,
 							time: data.time
 						});
+						
 					});
 			},
 			/**
@@ -104,7 +104,7 @@
 		},
 		created: function() {
 			this.loadData();
-			plus.webview.currentWebview().show();
+			tools.showWebview(plus.webview.currentWebview());
 			plus.nativeUI.closeWaiting();
 			tools.triggerGloble('readed_message',{id:request.id,type:request.type}); //触发消息阅读事件
 		},
