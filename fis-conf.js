@@ -70,17 +70,17 @@ fis.match('**.css', {
   url:'www$0',
 });
 
-fis.match('**.png', {
+fis.match('**.{png,gif}', {
   // fis-optimizer-png-compressor 插件进行压缩，已内置
   //optimizer: fis.plugin('png-compressor'),
   release:'.$0',
   url:'www$0',
 });
 
-fis.match('**.ttf', {
-  release:'.$0',
-  url:'www$0',
-});
+
+
+
+
 
 
 fis.match('*', {

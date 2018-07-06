@@ -44,13 +44,13 @@
 						id: 1,
 						message: "hello 你好",
 						name: "管理员",
-						ico: "/static/imgs/60X60.gif"
+						ico: __uri('/static/imgs/60X60.gif')
 					},
 					{
 						id: 2,
 						message: "你好管理员",
 						name: "世强",
-						ico: "/static/imgs/60X60.gif"
+						ico: __uri('/static/imgs/60X60.gif')
 					}
 				],
 			};
